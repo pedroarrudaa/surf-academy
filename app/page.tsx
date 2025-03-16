@@ -1,103 +1,213 @@
-import Image from "next/image";
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Header from './components/Header';
+import VideoGrid from './components/VideoGrid';
+import BlogGrid from './components/BlogGrid';
+import VideoModal from './components/VideoModal';
+import AddVideoForm from './components/AddVideoForm';
+import Pagination from './components/Pagination';
+import { VideoTranscription, BlogPost } from './types';
+import mockVideosRaw from './data/mockVideos';
+import mockBlogPostsRaw from './data/mockBlogPosts';
+
+// Convert raw data to correct types
+const mockVideosData: VideoTranscription[] = mockVideosRaw.map(video => ({
+  ...video,
+  videoId: video.videoUrl.split('embed/')[1] || '',
+  views: video.views?.toString() || '0',
+  description: video.chapters[0]?.content.substring(0, 100) + '...' || '',
+}));
+
+// Sort blogs by publication date (most recent first)
+const mockBlogPosts: BlogPost[] = [...mockBlogPostsRaw]
+  .sort((a, b) => {
+    // Sort by date (descending)
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // Video state
+  const [videoPage, setVideoPage] = useState(1);
+  const [videoFilter, setVideoFilter] = useState<'newest' | 'popular'>('newest');
+  const [allVideos, setAllVideos] = useState<VideoTranscription[]>(getSortedVideos(mockVideosData, 'newest'));
+  
+  // Blog state
+  const [blogPage, setBlogPage] = useState(1);
+  const [allBlogs, setAllBlogs] = useState<BlogPost[]>(mockBlogPosts);
+  
+  // General state
+  const [selectedVideo, setSelectedVideo] = useState<VideoTranscription | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  const videosPerPage = 6; // 2 lines of 3 videos
+  const blogsPerPage = 6; // Same number to maintain consistency
+  
+  // Function to sort videos based on filter
+  function getSortedVideos(videos: VideoTranscription[], filter: 'newest' | 'popular') {
+    if (filter === 'popular') {
+      // Sort by views (descending)
+      return [...videos].sort((a, b) => {
+        const viewsA = parseInt(a.views || '0');
+        const viewsB = parseInt(b.views || '0');
+        return viewsB - viewsA;
+      });
+    } else {
+      // Sort by upload date (descending)
+      return [...videos].sort((a, b) => {
+        if (!a.uploadDate || !b.uploadDate) return 0;
+        return new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime();
+      });
+    }
+  }
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // Handle video filter change
+  const handleVideoFilterChange = (filter: string) => {
+    const newFilter = filter as 'newest' | 'popular';
+    setVideoFilter(newFilter);
+    
+    // Apply filter to current videos
+    setAllVideos(getSortedVideos(
+      searchTerm ? allVideos : mockVideosData, 
+      newFilter
+    ));
+  };
+  
+  // When a video is clicked, open the modal
+  const handleVideoClick = (id: string) => {
+    const video = allVideos.find(v => v.id === id);
+    if (video) {
+      setSelectedVideo(video);
+      setIsModalOpen(true);
+    }
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  
+  // Content filtering based on search term
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      // Maintain original sorting when there's no search
+      setAllVideos(getSortedVideos(mockVideosData, videoFilter));
+      setAllBlogs(mockBlogPosts);
+      return;
+    }
+    
+    const normalizedSearchTerm = searchTerm.toLowerCase();
+    
+    // Filter videos
+    const filteredVideos = mockVideosData.filter(video => 
+      video.title.toLowerCase().includes(normalizedSearchTerm) ||
+      video.creator?.toLowerCase().includes(normalizedSearchTerm) ||
+      video.chapters.some(chapter => 
+        chapter.title.toLowerCase().includes(normalizedSearchTerm) ||
+        chapter.content.toLowerCase().includes(normalizedSearchTerm)
+      )
+    );
+    
+    // Apply current sorting to filtered results
+    setAllVideos(getSortedVideos(filteredVideos, videoFilter));
+    
+    // Filter blogs
+    const filteredBlogs = mockBlogPosts.filter(blog => 
+      blog.title.toLowerCase().includes(normalizedSearchTerm) ||
+      blog.description.toLowerCase().includes(normalizedSearchTerm) ||
+      blog.author.toLowerCase().includes(normalizedSearchTerm)
+    );
+    
+    setAllBlogs(filteredBlogs);
+  }, [searchTerm, videoFilter]);
+  
+  // Paginated content
+  const totalVideoPages = Math.ceil(allVideos.length / videosPerPage);
+  const totalBlogPages = Math.ceil(allBlogs.length / blogsPerPage);
+  
+  // Get the current videos for the current page
+  const getCurrentVideos = () => {
+    const startIndex = (videoPage - 1) * videosPerPage;
+    return allVideos.slice(startIndex, startIndex + videosPerPage);
+  };
+  
+  // Get the current blogs for the current page
+  const getCurrentBlogs = () => {
+    const startIndex = (blogPage - 1) * blogsPerPage;
+    return allBlogs.slice(startIndex, startIndex + blogsPerPage);
+  };
+  
+  // Search handler
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+  };
+  
+  // Mock for video addition (only UI)
+  const [showAddVideoForm, setShowAddVideoForm] = useState(false);
+  
+  const handleAddVideo = (video: VideoTranscription) => {
+    setAllVideos(prev => [video, ...prev]);
+    setShowAddVideoForm(false);
+  };
+  
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Header onSearch={handleSearch} />
+      
+      <main className="container mx-auto px-4 py-8">
+        {/* Videos section */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Videos</h2>
+            
+            <div className="flex items-center">
+              {totalVideoPages > 1 && (
+                <Pagination
+                  currentPage={videoPage}
+                  totalPages={totalVideoPages}
+                  onPageChange={setVideoPage}
+                  filter={videoFilter}
+                  onFilterChange={handleVideoFilterChange}
+                  showFilter={true}
+                />
+              )}
+            </div>
+          </div>
+          
+          <VideoGrid videos={getCurrentVideos()} onVideoClick={handleVideoClick} />
+        </section>
+        
+        {/* Blogs section */}
+        <section>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Blog Posts</h2>
+            
+            {totalBlogPages > 1 && (
+              <Pagination
+                currentPage={blogPage}
+                totalPages={totalBlogPages}
+                onPageChange={setBlogPage}
+              />
+            )}
         </div>
+          
+          <BlogGrid blogs={getCurrentBlogs()} />
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      
+      {selectedVideo && isModalOpen && (
+        <VideoModal 
+          video={selectedVideo}
+          onClose={closeModal}
+        />
+      )}
+      
+      {showAddVideoForm && (
+        <AddVideoForm 
+          onVideoAdded={handleAddVideo} 
+          onClose={() => setShowAddVideoForm(false)}
+        />
+      )}
     </div>
   );
 }

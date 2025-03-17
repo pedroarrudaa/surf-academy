@@ -8,7 +8,7 @@ interface BlogGridProps {
 
 const BlogGrid: React.FC<BlogGridProps> = ({ blogs }) => {
   // Function to handle blog clicks
-  // Esta função não é mais necessária, pois o BlogCard já tem seu próprio comportamento de clique
+  // This function is no longer needed as BlogCard already has its own click behavior
   
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

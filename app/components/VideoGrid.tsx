@@ -8,19 +8,18 @@ interface VideoGridProps {
 }
 
 const VideoGrid: React.FC<VideoGridProps> = ({ videos, onVideoClick }) => {
+  // Wrapper to adapt the click function to the format expected by VideoCard
+  const handleVideoClick = (video: VideoTranscription) => {
+    onVideoClick(video.id);
+  };
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {videos.map((video) => (
         <VideoCard
           key={video.id}
-          id={video.id}
-          title={video.title}
-          thumbnail={video.thumbnail}
-          creator={video.creator}
-          views={video.views ? parseInt(video.views) : undefined}
-          uploadDate={video.uploadDate}
-          onClick={onVideoClick}
-          description={video.description}
+          video={video}
+          onClick={handleVideoClick}
         />
       ))}
     </div>

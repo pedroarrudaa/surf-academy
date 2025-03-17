@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 py-3 px-4 md:px-8 shadow-sm">
+    <header className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 py-3 px-4 md:px-8 shadow-sm dark:shadow-gray-900">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex-1">
           <Link href="/" className="hover:opacity-80 transition-opacity">
@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
             <input
               type="text"
               placeholder="Search..."
-              className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 w-40 md:w-64 transition-all"
+              className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-[#73ebda] w-40 md:w-64 transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}

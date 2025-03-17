@@ -25,7 +25,7 @@ export const mockVideos: VideoTranscription[] = [
     thumbnail: 'https://i.ytimg.com/vi/fWfNWx7U4Pk/hqdefault.jpg',
     creator: 'Water Sports Academy',
     views: 45678,
-    uploadDate: '2024-04-20T10:00:00.000Z',
+    uploadDate: '2024-05-20T10:00:00.000Z',
     chapters: [
       {
         id: 'new-1-1',

@@ -23,19 +23,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-.dark {
-  --background: #121212;
-  --foreground: #e6e6e6;
-  --accent: #95a0b0;
-  --secondary: #73ebda;
-  --highlight: #064e45;
-  --card-bg: #1e1e1e;
-  --hover: #2a2a2a;
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -59,41 +46,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--highlight);
-}
-
-/* Dark mode specific styles */
-.dark .bg-white {
-  background-color: var(--card-bg);
-}
-
-.dark .bg-gray-50 {
-  background-color: var(--background);
-}
-
-.dark .text-gray-800 {
-  color: var(--foreground);
-}
-
-.dark .text-gray-700 {
-  color: var(--foreground);
-}
-
-.dark .text-gray-600 {
-  color: var(--accent);
-}
-
-.dark .text-gray-500 {
-  color: var(--accent);
-}
-
-.dark .border-gray-200 {
-  border-color: #2a2a2a;
-}
-
-.dark .shadow-md, .dark .shadow-lg, .dark .shadow-sm {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.dark .bg-gray-100 {
-  background-color: #2a2a2a;
 }

@@ -7,7 +7,7 @@ export const mockBlogPosts: BlogPost[] = [
     description: "Codeium is the only AI code assistant in the 2024 Forbes AI 50 List.",
     imageUrl: "https://placehold.co/600x400/051C3C/73ebda?text=Codeium+Forbes",
     author: "Codeium Team",
-    date: "2024-04-18T10:30:00.000Z",
+    date: "2024-05-18T10:30:00.000Z",
     url: "https://codeium.com/blog/codeium-forbes-ai-50",
     isExternalUrl: true
   },
@@ -17,7 +17,7 @@ export const mockBlogPosts: BlogPost[] = [
     description: "Codeium has achieved FedRAMP High Authorization, marking a significant milestone in the federal space.",
     imageUrl: "https://placehold.co/600x400/051C3C/73ebda?text=FedRAMP",
     author: "Codeium Team",
-    date: "2024-03-10T14:15:00.000Z",
+    date: "2024-05-10T14:15:00.000Z",
     url: "https://codeium.com/blog/codeium-extensions-achieve-fedramp-high-authorization",
     isExternalUrl: true
   },
@@ -27,7 +27,7 @@ export const mockBlogPosts: BlogPost[] = [
     description: "Introducing Wave 4, our fourth batch of updates to the Windsurf Editor.",
     imageUrl: "https://placehold.co/600x400/051C3C/73ebda?text=Wave+4",
     author: "Codeium Team",
-    date: "2024-03-05T09:30:00.000Z",
+    date: "2024-05-05T09:30:00.000Z",
     url: "https://codeium.com/blog/windsurf-wave-4",
     isExternalUrl: true
   },
@@ -37,7 +37,7 @@ export const mockBlogPosts: BlogPost[] = [
     description: "Introducing Wave 3, our third batch of updates to the Windsurf Editor.",
     imageUrl: "https://placehold.co/600x400/051C3C/73ebda?text=Wave+3",
     author: "Codeium Team",
-    date: "2024-02-13T15:45:00.000Z",
+    date: "2024-04-13T15:45:00.000Z",
     url: "https://codeium.com/blog/windsurf-wave-3",
     isExternalUrl: true
   },
@@ -47,8 +47,8 @@ export const mockBlogPosts: BlogPost[] = [
     description: "Codeium inducted into JPMorgan Chase Hall of Innovation for AI-powered development solutions.",
     imageUrl: "https://placehold.co/600x400/051C3C/73ebda?text=JPMorgan",
     author: "Codeium Team",
-    date: "2024-10-31T09:45:00.000Z",
-    url: "https://codeium.com/blog/codeium-jpmorgan-chase-hall-of-innovation",
+    date: "2024-04-31T09:45:00.000Z",
+    url: "https://codeium.com/blog/codeium-jpmorgan-hall-of-innovation",
     isExternalUrl: true
   },
   {

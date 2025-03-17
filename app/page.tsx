@@ -150,15 +150,28 @@ export default function Home() {
     setShowAddVideoForm(false);
   };
   
+  // New state for content submission form
+  const [showSubmitContentForm, setShowSubmitContentForm] = useState(false);
+  
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       <Header onSearch={handleSearch} />
       
       <main className="container mx-auto px-4 py-8">
+        {/* Submit Content Button */}
+        <div className="flex justify-end mb-6">
+          <button 
+            onClick={() => setShowSubmitContentForm(true)}
+            className="bg-[#73ebda] text-gray-800 dark:text-black px-4 py-2 rounded-md hover:bg-[#73ebda]/80 transition-colors font-bold"
+          >
+            Submit Content
+          </button>
+        </div>
+        
         {/* Videos section */}
         <section className="mb-16">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Videos</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Videos</h2>
             
             <div className="flex items-center">
               {totalVideoPages > 1 && (
@@ -180,7 +193,7 @@ export default function Home() {
         {/* Blogs section */}
         <section>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Blog Posts</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Blog Posts</h2>
             
             {totalBlogPages > 1 && (
               <Pagination
@@ -197,6 +210,7 @@ export default function Home() {
       
       {selectedVideo && isModalOpen && (
         <VideoModal 
+          key={`video-modal-${selectedVideo.id}`}
           video={selectedVideo}
           onClose={closeModal}
         />
@@ -207,6 +221,74 @@ export default function Home() {
           onVideoAdded={handleAddVideo} 
           onClose={() => setShowAddVideoForm(false)}
         />
+      )}
+      
+      {/* Submit Content Form */}
+      {showSubmitContentForm && (
+        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-900 rounded-lg max-w-md w-full p-6 shadow-xl dark:shadow-[#73ebda]/5">
+            <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Submit Content</h2>
+            
+            <form className="space-y-4" onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const url = formData.get('url') as string;
+              const contentType = formData.get('contentType') as string;
+              
+              // Here you would typically send this data to your backend
+              console.log('Submitting:', { url, contentType });
+              
+              // For now, just close the form
+              setShowSubmitContentForm(false);
+            }}>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1" htmlFor="url">
+                  Content URL
+                </label>
+                <input
+                  id="url"
+                  name="url"
+                  type="url"
+                  required
+                  placeholder="https://example.com/your-content"
+                  className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-black text-gray-800 dark:text-white"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1" htmlFor="contentType">
+                  Content Type
+                </label>
+                <select
+                  id="contentType"
+                  name="contentType"
+                  required
+                  className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-black text-gray-800 dark:text-white"
+                >
+                  <option value="video">Video</option>
+                  <option value="blog">Blog Post</option>
+                </select>
+              </div>
+              
+              {/* Button group - centered */}
+              <div className="flex justify-center space-x-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowSubmitContentForm(false)}
+                  className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 font-bold text-gray-800 dark:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm bg-[#73ebda] text-gray-800 dark:text-black rounded-md hover:bg-[#73ebda]/80 font-bold"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );

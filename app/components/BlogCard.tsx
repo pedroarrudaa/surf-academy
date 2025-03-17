@@ -82,18 +82,18 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
 
   return (
     <div 
-      className="relative overflow-hidden rounded-lg bg-white dark:bg-gray-800 shadow-md cursor-pointer group hover:shadow-lg transition-shadow"
+      className="relative overflow-hidden rounded-lg bg-white shadow-md cursor-pointer group hover:shadow-lg transition-shadow flex flex-col h-full"
     >
       <Link 
         href={blog.url}
         target={blog.isExternalUrl ? "_blank" : "_self"}
         rel={blog.isExternalUrl ? "noopener noreferrer" : ""}
-        className="block"
+        className="block h-full"
       >
         {/* Blog thumbnail */}
         <div className="relative aspect-video overflow-hidden">
           {isLoading ? (
-            <div className="absolute inset-0 bg-gray-100 dark:bg-gray-700 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gray-100 animate-pulse"></div>
           ) : (
             <>
               <Image 
@@ -110,33 +110,35 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
           )}
         </div>
         
-        <div className="p-3">
+        <div className="p-3 flex flex-col flex-grow">
           {/* Blog author */}
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">By: {blog.author}</p>
+          <p className="text-xs text-gray-500 mb-1">By: {blog.author}</p>
           
           {/* Blog title */}
-          <h3 className="font-medium text-gray-800 dark:text-gray-100 line-clamp-2 mb-2">{title}</h3>
+          <h3 className="font-medium text-gray-800 line-clamp-2 mb-2">{title}</h3>
           
           {/* Blog description */}
-          <p className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2 mb-1">{description}</p>
+          <p className="text-xs text-gray-600 line-clamp-2 mb-1">{description}</p>
           
-          {/* Blog date */}
-          <div className="flex justify-end">
-            <p className="text-xs text-gray-500 dark:text-gray-400">{formatRelativeTime(blog.date)}</p>
+          <div className="flex-grow"></div>
+          
+          {/* Blog date - moved to bottom */}
+          <div className="flex justify-end mt-2">
+            <p className="text-xs text-gray-500">{formatRelativeTime(blog.date)}</p>
           </div>
         </div>
       </Link>
       
       {/* Bookmark button */}
       <button 
-        className="absolute top-2 right-2 bg-white/70 dark:bg-gray-800/70 p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-200 dark:hover:bg-gray-700"
+        className="absolute top-2 right-2 bg-white/70 p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-200"
         onClick={(e) => {
           e.stopPropagation(); // Prevent the click from triggering the card link
           // Bookmark implementation can be added here
         }}
         style={{ display: blog.isExternalUrl ? 'none' : 'block' }}
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" className="fill-gray-800 dark:fill-gray-200">
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" className="fill-gray-800">
           <path fillRule="evenodd" clipRule="evenodd" d="M14.5 2H9l-.35.15-.65.64-.65-.64L7 2H1.5l-.5.5v10l.5.5h5.29l.86.85h.7l.86-.85h5.29l.5-.5v-10l-.5-.5zm-7 10.32l-.18-.17L7 12H2V3h4.79l.74.74-.03 8.58zM14 12H9l-.35.15-.14.13V3.7l.7-.7H14v9zM6 5H3v1h3V5zm0 4H3v1h3V9zM3 7h3v1H3V7zm10-2h-3v1h3V5zm-3 2h3v1h-3V7zm0 2h3v1h-3V9z"/>
         </svg>
       </button>

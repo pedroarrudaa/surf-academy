@@ -2,7 +2,8 @@
 
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,27 +22,40 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  useEffect(() => {
-    // Check initial theme preference
-    const isDarkMode = localStorage.getItem('darkMode') === 'true' || 
-      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    
-    // Apply initial theme
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <title>{siteMetadata.title}</title>
         <meta name="description" content={siteMetadata.description} />
         <link rel="icon" href={siteMetadata.icons.icon} />
+        
+        {/* Dark mode initialization script - runs before any React code */}
+        <Script
+          id="dark-mode-script"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const savedTheme = localStorage.getItem('theme');
+                  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  
+                  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {
+                  console.error('Dark mode init error:', e);
+                }
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white transition-colors duration-200`}>
+        {children}
+      </body>
     </html>
   )
 }

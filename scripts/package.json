@@ -1,0 +1,20 @@
+{
+  "name": "video-transcription",
+  "version": "1.0.0",
+  "description": "Video transcription utility using OpenAI APIs",
+  "main": "transcribeVideo.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node transcribeVideo.ts",
+    "transcribe": "ts-node transcribeVideo.ts"
+  },
+  "dependencies": {
+    "assemblyai": "^4.9.0",
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+}

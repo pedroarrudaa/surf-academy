@@ -81,7 +81,7 @@ const Pagination: React.FC<PaginationProps> = ({
       {showFilter && onFilterChange && (
         <div className="mr-4">
           <select
-            className="px-2 py-1.5 rounded-md bg-gray-100 text-gray-700 text-sm border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#73ebda]"
+            className="px-2 py-1.5 rounded-md bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200 text-sm border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-[#73ebda]"
             value={filter}
             onChange={(e) => onFilterChange(e.target.value)}
           >
@@ -92,7 +92,7 @@ const Pagination: React.FC<PaginationProps> = ({
       )}
       
       <button
-        className="px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 hover:bg-[#73ebda]/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1 transition-colors text-sm"
+        className="px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-[#73ebda]/20 dark:hover:bg-[#73ebda]/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1 transition-colors text-sm"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
@@ -107,7 +107,7 @@ const Pagination: React.FC<PaginationProps> = ({
       </div>
       
       <button
-        className="px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 hover:bg-[#73ebda]/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1 transition-colors text-sm"
+        className="px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-[#73ebda]/20 dark:hover:bg-[#73ebda]/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1 transition-colors text-sm"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
@@ -129,8 +129,8 @@ const PageButton: React.FC<{
     <button
       className={`w-8 h-8 rounded-md flex items-center justify-center ${
         isActive 
-          ? 'bg-[#73ebda] text-gray-800 font-medium' 
-          : 'bg-gray-100 text-gray-700 hover:bg-[#73ebda]/20'
+          ? 'bg-[#73ebda] text-gray-800 dark:text-black font-medium' 
+          : 'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-[#73ebda]/20 dark:hover:bg-[#73ebda]/10'
       } transition-colors`}
       onClick={() => onClick(page)}
     >

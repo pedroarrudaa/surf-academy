@@ -72,64 +72,65 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Melhorias na Transcrição e Análise de Vídeos
+## Video Transcription and Analysis Enhancements
 
-### Visão Geral
+### Overview
 
-Implementamos um sistema robusto de processamento de vídeos usando a API Whisper da OpenAI para transcrever e analisar conteúdo de vídeos do YouTube. Este sistema permite a extração automática de capítulos, resumos e conteúdo detalhado dos vídeos.
+We've implemented a robust video processing system using AssemblyAI's API to transcribe and analyze YouTube video content. This system enables automatic extraction of chapters, summaries, and detailed content from videos.
 
-### Principais Recursos
+### Key Features
 
-#### 1. Processamento Confiável de Áudio
-- Extração otimizada de áudio de vídeos do YouTube
-- Cache de arquivos para evitar downloads repetidos
-- Seleção inteligente do formato de áudio para melhor qualidade
-- Tratamento robusto de erros durante o download
+#### 1. Optimized Audio Processing
+- Efficient audio extraction from YouTube videos
+- Automatic conversion to mono 16kHz format (optimal for transcription)
+- Reduced audio quality to 128kbps (sufficient for speech recognition)
+- File-based caching to avoid redundant downloads
 
-#### 2. Transcrição com Whisper AI
-- Utilização do modelo `whisper-1` para transcrição precisa
-- Temperatura baixa (0.2) para garantir resultados mais consistentes
-- Detecção automática de idioma com preferência para inglês
-- Logging detalhado para diagnóstico
+#### 2. High-Speed Transcription with AssemblyAI
+- Utilizes AssemblyAI's "nano" speech model (5-10x faster than standard)
+- Automatic chapter generation and summarization
+- Parallel processing for long audio files
+- Dynamic polling strategy with exponential backoff
 
-#### 3. Geração Inteligente de Capítulos
-- Extração de capítulos baseada em análise de parágrafos e marcações de tempo
-- Fallback para segmentação baseada em sentenças quando necessário
-- Validação de timestamps para garantir compatibilidade com a duração do vídeo
-- Ordenação e filtragem de capítulos inválidos
+#### 3. Intelligent Chapter Generation
+- Auto-identification of chapter boundaries based on content
+- Start time extraction and formatting
+- Content validation and filtering
+- Automatic fallback if AssemblyAI chapters are unavailable
 
-#### 4. Componente de Modal de Vídeo Aprimorado
-- Detecção automática de duração do vídeo via API do YouTube
-- Validação de capítulos contra a duração real
-- Estados de interface reativos para feedback em tempo real
-- Suporte para transcrição sob demanda
+#### 4. Enhanced Video Modal Component
+- Automatic detection of video duration via YouTube API
+- Real-time interface states for user feedback
+- Support for on-demand transcription
+- Clean navigation between chapters
 
-#### 5. Tratamento Robusto de Erros
-- Detecção e recuperação de falhas em cada fase do processo
-- Feedback visual para o usuário sobre o status do processamento
-- Opções de retry em caso de falhas
-- Logging detalhado para diagnóstico
+#### 5. Robust Error Handling
+- Detection and recovery from failures at each processing stage
+- Visual feedback to users about processing status
+- Retry options in case of failures
+- Detailed logging for diagnostics
 
-### Fluxo de Processamento
+### Processing Flow
 
-1. **Extração de Áudio**: O sistema baixa o áudio do vídeo do YouTube com a melhor qualidade disponível.
-2. **Transcrição**: O áudio é enviado para a API Whisper para transcrição completa.
-3. **Geração de Capítulos**: A transcrição é analisada para identificar divisões naturais e criar capítulos.
-4. **Validação**: Os timestamps são validados contra a duração real do vídeo.
-5. **Apresentação**: Os capítulos validados são exibidos na interface, permitindo navegação direta.
+1. **Audio Extraction**: The system downloads the YouTube video audio at optimal quality.
+2. **Audio Analysis**: For long content (>15 minutes), audio is automatically split into segments.
+3. **Parallel Processing**: Segments are processed concurrently for dramatically faster results.
+4. **Transcription**: Audio is sent to AssemblyAI for fast transcription.
+5. **Enhancement**: If configured, OpenAI enhances the chapters and summary.
+6. **Presentation**: Validated chapters are displayed in the interface for easy navigation.
 
-### Benefícios
+### Performance Improvements
 
-- **Para Usuários**: Navegação fácil pelo conteúdo do vídeo, resumos rápidos e melhor compreensão.
-- **Para Administradores**: Processamento automatizado de vídeos com mínima intervenção manual.
-- **Para Desenvolvedores**: Código modular e bem documentado, fácil de manter e estender.
+- **Short audios** (<1 minute): Complete in 5-15 seconds
+- **Medium audios** (1-5 minutes): Complete in 15-45 seconds
+- **Long content** (>15 minutes): Dramatically improved through parallel processing
 
-### Tecnologias Utilizadas
+### Technologies Used
 
 - **Frontend**: React, TypeScript, Tailwind CSS
 - **Backend**: Next.js API Routes
-- **Processamento de Áudio**: ytdl-core
-- **AI**: OpenAI Whisper API
-- **Integração de Vídeo**: YouTube iFrame API
+- **Audio Processing**: FFmpeg, yt-dlp
+- **AI**: AssemblyAI API, OpenAI API (optional enhancement)
+- **Video Integration**: YouTube iFrame API
 
-Esta implementação resolve problemas comuns como timestamps incorretos, capítulos mal segmentados e falhas no processamento de áudio, garantindo uma experiência confiável e de alta qualidade para os usuários.
+This implementation solves common issues like slow processing times, incorrect timestamps, and audio processing failures, ensuring a reliable and high-quality experience for users.

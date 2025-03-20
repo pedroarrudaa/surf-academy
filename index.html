@@ -2,46 +2,108 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>SurfAcademy</title>
-  <meta http-equiv="refresh" content="0;URL=https://pedroarrudaa.github.io/surf-academy/">
+  <title>SurfAcademy - A Next.js Demo Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      background-color: #f5f5f5;
+    .gradient-bg {
+      background: linear-gradient(135deg, #73ebda 0%, #31b1b0 100%);
     }
-    .container {
-      max-width: 600px;
-      padding: 2rem;
-    }
-    h1 {
-      color: #333;
-    }
-    p {
-      color: #666;
-      margin-bottom: 1.5rem;
-    }
-    a {
-      color: #0070f3;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
+    .code {
+      background: #f1f5f9;
+      border-radius: 0.375rem;
+      padding: 1rem;
+      font-family: monospace;
+      white-space: pre;
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h1>SurfAcademy</h1>
-    <p>Redirecting to <a href="https://pedroarrudaa.github.io/surf-academy/">https://pedroarrudaa.github.io/surf-academy/</a></p>
-    <p>If you are not redirected automatically, please click the link above.</p>
-  </div>
+<body class="bg-gray-100 min-h-screen">
+  <header class="gradient-bg text-white">
+    <div class="container mx-auto px-6 py-16">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">SurfAcademy</h1>
+      <p class="text-xl md:text-2xl mb-8">A modern platform for WindSurf IDE tutorials and blogs</p>
+      <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <a href="https://github.com/pedroarrudaa/surf-academy" class="bg-white text-gray-800 hover:bg-gray-100 font-bold py-2 px-6 rounded-lg transition-colors">
+          GitHub Repository
+        </a>
+        <a href="#run-locally" class="bg-transparent hover:bg-white hover:bg-opacity-20 border border-white font-bold py-2 px-6 rounded-lg transition-colors">
+          Run Locally
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-8">
+    <section class="bg-white shadow-lg rounded-lg p-8 mb-8">
+      <h2 class="text-2xl font-bold mb-4">About This Project</h2>
+      <p class="mb-4">
+        SurfAcademy is a Next.js application that serves as a platform for WindSurf IDE tutorials and blogs.
+        It features a responsive design that works on both mobile and desktop devices.
+      </p>
+      <p class="mb-4">
+        The application includes features such as:
+      </p>
+      <ul class="list-disc ml-6 mb-4">
+        <li>Browse WindSurf IDE tutorial videos</li>
+        <li>Read blog posts about WindSurf IDE and Codium AI integration</li>
+        <li>Video transcription and analysis using AssemblyAI</li>
+        <li>Intelligent chapter generation from video content</li>
+        <li>Dark mode support</li>
+      </ul>
+      <p>
+        Note: This GitHub Pages deployment is a static version with limited functionality. 
+        For the full experience with all features working, please run the project locally.
+      </p>
+    </section>
+
+    <section id="run-locally" class="bg-white shadow-lg rounded-lg p-8 mb-8">
+      <h2 class="text-2xl font-bold mb-4">Run Locally</h2>
+      <p class="mb-4">To run this project locally and experience all its features:</p>
+      
+      <ol class="list-decimal ml-6 mb-6">
+        <li class="mb-2">Clone the repository:
+          <div class="code mt-2">git clone https://github.com/pedroarrudaa/surf-academy.git
+cd surf_academy</div>
+        </li>
+        <li class="mb-2">Install dependencies:
+          <div class="code mt-2">npm install</div>
+        </li>
+        <li class="mb-2">Start the development server:
+          <div class="code mt-2">npm run dev</div>
+        </li>
+        <li class="mb-2">Open <a href="http://localhost:3000" class="text-blue-600 hover:underline" target="_blank">http://localhost:3000</a> in your browser.</li>
+      </ol>
+    </section>
+
+    <section class="bg-white shadow-lg rounded-lg p-8">
+      <h2 class="text-2xl font-bold mb-4">Technologies Used</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="p-4 text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" class="mx-auto mb-2"><title>Next.js</title><path d="M22 22.35c-4.675 0-8.47-3.83-8.47-8.55C13.53 9.08 17.325 5.25 22 5.25c4.675 0 8.47 3.83 8.47 8.55 0 4.72-3.795 8.55-8.47 8.55ZM22 .5C15.095.5 9.5 6.155 9.5 13.13c0 6.97 5.595 12.629 12.5 12.629 6.905 0 12.5-5.655 12.5-12.629C34.5 6.155 28.905.5 22 .5Zm1.75 34.75v-9.359c0-.484.39-.879.875-.879s.875.395.875.88v11.285a.88.88 0 0 1-.875.882H9.5c-4.89 0-8.845-4.004-8.845-8.949S4.61 20.16 9.5 20.16c4.89 0 8.75 3.832 8.75 8.55 0 2.36-.965 4.5-2.535 6.06a.877.877 0 0 1-1.249 0 .888.888 0 0 1 0-1.261 8.47 8.47 0 0 0 2.034-4.799c0-3.705-3.161-6.71-7-6.71-3.839 0-7 3.005-7 6.71 0 3.704 3.161 6.709 7 6.709h12.25v-.169Z" fill="black"/></svg>
+          <span>Next.js</span>
+        </div>
+        <div class="p-4 text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" class="mx-auto mb-2"><title>React</title><path fill="#61DAFB" d="M12 9.861a2.139 2.139 0 1 0 0 4.278 2.139 2.139 0 1 0 0-4.278zm-5.992 6.433l-.472-.12C2.018 15.246 0 13.737 0 11.996s2.018-3.25 5.536-4.177l.472-.119.133.468a23.53 23.53 0 0 0 1.363 3.578l.101.213-.101.213a23.307 23.307 0 0 0-1.363 3.578l-.133.467zM5.317 8.95c-2.674.751-4.315 1.9-4.315 3.046 0 1.145 1.641 2.294 4.315 3.046a24.95 24.95 0 0 1 1.182-3.046A24.752 24.752 0 0 1 5.317 8.95zm12.675 7.344l-.133-.469a23.357 23.357 0 0 0-1.364-3.577l-.101-.213.101-.213a23.42 23.42 0 0 0 1.364-3.578l.133-.468.473.119c3.517.928 5.535 2.437 5.535 4.178s-2.018 3.25-5.535 4.178l-.473.12zm-.491-4.259c.48 1.039.877 2.06 1.182 3.046 2.675-.752 4.315-1.901 4.315-3.046 0-1.146-1.641-2.294-4.315-3.046a24.788 24.788 0 0 1-1.182 3.046zm-5.317 7.279l-.133-.469a23.357 23.357 0 0 0-1.364-3.578l-.101-.213.101-.213a23.42 23.42 0 0 0 1.364-3.578l.133-.468.473.119c3.517.928 5.535 2.437 5.535 4.178s-2.018 3.25-5.535 4.178l-.473.12zm-.491-4.259c.48 1.039.877 2.06 1.182 3.046 2.675-.752 4.315-1.901 4.315-3.046 0-1.146-1.641-2.294-4.315-3.046A24.826 24.826 0 0 1 11.693 12zm-5.317 7.279l-.133-.469a23.357 23.357 0 0 0-1.364-3.578l-.101-.213.101-.213a23.42 23.42 0 0 0 1.364-3.578l.133-.468.473.119c3.517.928 5.535 2.437 5.535 4.178s-2.018 3.25-5.535 4.178l-.473.12zm-.491-4.259c.48 1.039.877 2.06 1.182 3.046 2.675-.752 4.315-1.901 4.315-3.046 0-1.146-1.641-2.294-4.315-3.046a24.826 24.826 0 0 1-1.182 3.046zm12.675 7.344l-.133-.469a23.357 23.357 0 0 0-1.364-3.577l-.101-.213.101-.213a23.42 23.42 0 0 0 1.364-3.578l.133-.468.473.119c3.517.928 5.535 2.437 5.535 4.178s-2.018 3.25-5.535 4.178l-.473.12z"/></svg>
+          <span>React</span>
+        </div>
+        <div class="p-4 text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" class="mx-auto mb-2"><title>TypeScript</title><path fill="#3178C6" d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0H1.125zM14.37 8.51h3.933v11.277h-2.625v-8.825h-1.308V8.51zm-5.277 2.229c.786 0 1.472.19 2.057.573.59.378 1.043.892 1.358 1.541.315.65.473 1.384.473 2.205 0 .817-.158 1.544-.473 2.18-.315.636-.77 1.138-1.365 1.507-.59.364-1.283.546-2.078.546-.511 0-.984-.06-1.418-.182a3.248 3.248 0 0 1-1.144-.54v2.89H3.882V8.51h2.441v3.524a3.749 3.749 0 0 1 1.155-.601 4.88 4.88 0 0 1 1.615-.239zm-1.455 1.527a1.94 1.94 0 0 0-.626.364v4.515c.175.138.373.245.594.323.227.074.474.111.741.111.356 0 .671-.076.944-.229.274-.156.49-.385.65-.687.158-.302.238-.665.24-1.09-.002-.427-.088-.797-.259-1.108a1.903 1.903 0 0 0-.7-.706 1.977 1.977 0 0 0-.958-.252 2.286 2.286 0 0 0-.626.086z"/></svg>
+          <span>TypeScript</span>
+        </div>
+        <div class="p-4 text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" class="mx-auto mb-2"><title>Tailwind CSS</title><path fill="#06B6D4" d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/></svg>
+          <span>Tailwind CSS</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-800 text-white text-center py-8">
+    <div class="container mx-auto px-6">
+      <p>© 2024 SurfAcademy</p>
+      <p class="text-sm text-gray-400 mt-2">A Next.js demonstration project</p>
+    </div>
+  </footer>
 </body>
 </html>
